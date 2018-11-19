@@ -1,21 +1,29 @@
 package com.taotao.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.pub.utils.*;
-import com.taotao.mapper.TbItemDescMapper;
-import com.taotao.mapper.TbItemMapper;
-import com.taotao.mapper.TbItemMapperWrapper;
-import com.taotao.pojo.TbItem;
-import com.taotao.pojo.TbItemDesc;
-import com.taotao.pojo.TbItemExample;
-import com.taotao.service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.pub.utils.EUDataGridResult;
+import com.pub.utils.IDUtils;
+import com.pub.utils.MMArrayUtil;
+import com.pub.utils.MMCollectionUtil;
+import com.pub.utils.MMStringUtil;
+import com.pub.utils.MMValueUtils;
+import com.pub.utils.WebAppResult;
+import com.taotao.mapper.TbItemDescMapper;
+import com.taotao.mapper.TbItemMapper;
+import com.taotao.mapper.TbItemMapperWrapper;
+import com.taotao.mapper.TbItemParamItemMapper;
+import com.taotao.pojo.TbItem;
+import com.taotao.pojo.TbItemDesc;
+import com.taotao.pojo.TbItemExample;
+import com.taotao.pojo.TbItemParamItem;
+import com.taotao.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @Version: 1.0
@@ -34,6 +42,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemMapperWrapper tbItemMapperWrapper;
+
+    @Autowired
+    private TbItemParamItemMapper tbItemParamItemMapper;
 
     @Override
     public EUDataGridResult getListItems(Integer page, Integer size) {
@@ -56,7 +67,7 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public WebAppResult saveItem(TbItem tbItem, String desc) {
+    public WebAppResult saveItem(TbItem tbItem, String desc, String itemParams) {
         Long id = IDUtils.genLongId();
         tbItem.setId(id);
         tbItem.setStatus((byte) 1);
@@ -70,8 +81,16 @@ public class ItemServiceImpl implements ItemService {
         tbItemDesc.setItemDesc(desc);
         tbItemDesc.setCreated(new Date());
         tbItemDesc.setUpdated(new Date());
-
         tbItemDescMapper.insert(tbItemDesc);
+
+        TbItemParamItem tbItemParamItem = new TbItemParamItem();
+        tbItemParamItem.setItemId(id);
+        tbItemParamItem.setParamData(itemParams);
+        tbItemParamItem.setCreated(new Date());
+        tbItemParamItem.setUpdated(new Date());
+
+        tbItemParamItemMapper.insert(tbItemParamItem);
+
 
         return WebAppResult.ok();
     }

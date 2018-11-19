@@ -14,7 +14,7 @@ public interface ItemService {
 
     EUDataGridResult getListItems(Integer page, Integer size);
 
-    WebAppResult saveItem(TbItem tbItem, String desc);
+    WebAppResult saveItem(TbItem tbItem, String desc, String itemParams);
 
     WebAppResult queryItemDesc(Long id);
 

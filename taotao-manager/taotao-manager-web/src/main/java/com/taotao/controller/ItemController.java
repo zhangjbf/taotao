@@ -32,8 +32,8 @@ public class ItemController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public WebAppResult saveItem(TbItem item, String desc) {
-        WebAppResult webAppResult = itemService.saveItem(item, desc);
+    public WebAppResult saveItem(TbItem item, String desc,String itemParams) {
+        WebAppResult webAppResult = itemService.saveItem(item, desc,itemParams);
         return webAppResult;
     }
 
