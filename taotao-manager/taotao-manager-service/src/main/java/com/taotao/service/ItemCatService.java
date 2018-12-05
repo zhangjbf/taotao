@@ -1,8 +1,9 @@
 package com.taotao.service;
 
-import com.pub.model.Tree;
-
 import java.util.List;
+
+import com.pub.model.Tree;
+import com.pub.utils.ItemCatResult;
 
 /**
  * @Version: 1.0
@@ -13,4 +14,6 @@ import java.util.List;
 public interface ItemCatService {
 
     List<Tree> getItemCatList(Integer id);
+
+    ItemCatResult getAllItemCat();
 }

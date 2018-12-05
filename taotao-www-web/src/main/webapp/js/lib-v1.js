@@ -1171,7 +1171,7 @@ $.extend(jdModelCallCenter, {autoLocation: function(a) {
 //http://d.360buy.com/configs/get?type=JSON
 var category = {OBJ: $("#_JD_ALLSORT"),
 		//URL_Serv: "http://manage.taotao.com/web/itemcat/all?callback=category.getDataService",
-		URL_Serv: "http://127.0.0.1:8081/rest/itemcat/all.html",
+		URL_Serv: "http://127.0.0.1:8080/rest/itemcat/all?callback=category.getDataService",
 		//URL_Serv: "http://localhost:8082/category.json",
 		URL_BrandsServ: "http://d.360buy.com/brandVclist2/get?callback=category.getBrandService&ids=a,9211,9212^b,9214,9215^c,9217,9218^d,9220,9221^e,9223,9224^f,9226,9227^g,9229,9230^h,9232,9233^m,9235,9236^i,9238,9239^j,9241,9242^p,9244,9245^k,9247,9248^l,9250,9251",
 		FN_GetLink: function(a, b) {
@@ -1204,13 +1204,13 @@ var category = {OBJ: $("#_JD_ALLSORT"),
         d.html(a), $.bigiframe(d)*/
     },FN_GetData: function() {
     	//使用jsonp来实现跨域请求
-        // $.getJSONP(this.URL_Serv, category.getDataService);
+        $.getJSONP(this.URL_Serv, category.getDataService);
     	//直接使用ajax请求json数据
-        $.getJSON(this.URL_Serv, function(json){
-    		category.getDataService(json);
-    	});
+        // $.getJSON(this.URL_Serv, function(json){
+    	// 	category.getDataService(json);
+    	// });
     },FN_GetBrands: function() {
-      //  $.getJSONP(this.URL_BrandsServ, category.getBrandService)
+       $.getJSONP(this.URL_BrandsServ, category.getBrandService)
     },FN_RefactorJSON: function(a, b) {
         for (var c = a.length / b, d = [], e = 0; c > e; e++)
             d.push({tabs: [],increment: null,count: b,skuids: []});
@@ -1221,7 +1221,7 @@ var category = {OBJ: $("#_JD_ALLSORT"),
         var b = '<div class="item fore${index+1}">    <span data-split="1" {if pageConfig.isHome}clstag="homepage|keycount|home2013|0${601+parseInt(index)}a"{/if}><h3>${n}</h3><s></s></span>    <div class="i-mc">        <div onclick="$(this).parent().parent().removeClass(\'hover\')" class="close">\xd7</div>        <div class="subitem" {if pageConfig.isHome}clstag="homepage|keycount|home2013|0${601+parseInt(index)}b"{/if}>            {for subitem in i}            <dl class="fore${parseInt(subitem_index)+1}">                <dt>${category.FN_GetLink(1,subitem)}</dt>                <dd>{for link in subitem.i}<em>${category.FN_GetLink(2,link)}</em>{/for}</dd>            </dl>            {/for} </div> </div></div>', c = '<div class="item item-col2 fore${index+1}">    <span data-split="1" {if pageConfig.isHome}clstag="homepage|keycount|home2013|0${601+parseInt(index)}a"{/if}><h3>${n}</h3><s></s></span>    <div class="i-mc">        <ul class="hide title-list lh">            <li class="fore1"><a href="http://chongzhi.jd.com/">\u5145\u503c\u7f34\u8d39</a></li>            <li class="fore2"><a href="http://caipiao.jd.com/">\u4eac\u4e1c\u5f69\u7968</a></li>            <li class="fore3"><a href="http://channel.jd.com/4938-12316.html">\u57f9\u8bad\u6559\u80b2</a></li>            <li class="fore4"><a href="http://jipiao.jd.com/ticketquery/flightHotcity.action">\u4f18\u9009\u673a\u7968</a></li>            <li class="fore5"><a href="http://channel.jd.com/4938-12300.html">\u65c5\u884c\u7b7e\u8bc1</a></li>            <li class="fore6"><a href="http://game.jd.com/">\u4eac\u4e1c\u6e38\u620f</a></li>        </ul>        <div onclick="$(this).parent().parent().removeClass(\'hover\')" class="close">\xd7</div>        <div class="subitem" {if pageConfig.isHome}clstag="homepage|keycount|home2013|0${601+parseInt(index)}b"{/if}>            {for item in i}            <div class="sub-item-col sub-item-col${item_index} fl">                {for subitem in item.tabs}                <dl class="fore${parseInt(subitem_index)+1}">                    <dt>${category.FN_GetLink(1,subitem)}</dt>                    <dd>{for link in subitem.i}<em>${category.FN_GetLink(2,link)}</em>{/for}</dd>                </dl>                {/for}					{if item_index==1}<div class="cat-right-con" id="JD_sort_${t}" clstag="homepage|keycount|home2013|0614c"><div class="loading-style1"><b></b>\u52a0\u8f7d\u4e2d\uff0c\u8bf7\u7a0d\u5019...</div></div>{/if}            </div>            {/for}        </div>    </div></div>';
         return "l" == a.t ? c.process(a) : b.process(a)
     },FN_GetBrands: function() {
-      //  $.getJSONP(this.URL_BrandsServ, category.getBrandService)
+       $.getJSONP(this.URL_BrandsServ, category.getBrandService)
     },getDataService: function(a) {
         var b = [], c = this;
         $.each(a.data, function(a) {
